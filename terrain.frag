@@ -1,3 +1,5 @@
+#version 330 core
+
 in vec3 vFragPos;
 in vec3 vNormal;
 in float vHeight;

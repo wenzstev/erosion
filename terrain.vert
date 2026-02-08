@@ -1,3 +1,5 @@
+#version 330 core
+
 layout (location = 0) in vec3 aPos;
 layout (location = 1) in vec3 aNormal;
 layout (location = 2) in vec2 aTexCoords;
@@ -17,5 +19,5 @@ void main()
 
     vNormal = mat3(transpose(inverse(uModel))) * aNormal;
     vHeight = aPos.y;
-    gl_Positoin = uProjection * uView * worldPos;
+    gl_Position = uProjection * uView * worldPos;
 }
