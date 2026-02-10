@@ -8,27 +8,27 @@
 #include <ostream>
 #include "glad/glad.h"
 
-Renderer::Renderer(){}
-Renderer::~Renderer(){}
+OpenGLRenderer::OpenGLRenderer(){}
+OpenGLRenderer::~OpenGLRenderer(){}
 
-void Renderer::init() {
+void OpenGLRenderer::init() {
     glEnable(GL_DEPTH_TEST);
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 }
 
-void Renderer::beginFrame() {
+void OpenGLRenderer::beginFrame() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void Renderer::endFrame() {
+void OpenGLRenderer::endFrame() {
 
 }
 
-void Renderer::cleanup() {
+void OpenGLRenderer::cleanup() {
 
 }
 
-RenderableObject Renderer::createRenderableMesh(const Mesh &mesh) {
+RenderableObject OpenGLRenderer::createRenderableMesh(const Mesh &mesh) {
     if (mesh.vertices.empty() || mesh.indices.empty()) {
         std::cerr << "Error [Renderer]: Cannot create renderable from empty mesh." << std::endl;
         return {0,0,0,0};
@@ -68,14 +68,14 @@ RenderableObject Renderer::createRenderableMesh(const Mesh &mesh) {
     return {vao, vbo, ibo, (unsigned int)mesh.indices.size() };
 }
 
-void Renderer::destroyRenderableMesh(RenderableObject& object) {
+void OpenGLRenderer::destroyRenderableMesh(RenderableObject& object) {
     glDeleteVertexArrays(1, &object.vaoId);
     glDeleteBuffers(1, &object.vboId);
     glDeleteBuffers(1, &object.iboId);
     object= {0, 0, 0, 0 };
 }
 
-void Renderer::draw(const RenderableObject& object) {
+void OpenGLRenderer::draw(const RenderableObject& object) {
     if (object.vaoId == 0) return;
 
     glBindVertexArray(object.vaoId);

@@ -10,14 +10,14 @@
 
 #include "glad/glad.h"
 
-Shader::Shader() : m_programID(0) {}
-Shader::~Shader() {
+OpenGLShader::OpenGLShader() : m_programID(0) {}
+OpenGLShader::~OpenGLShader() {
     if (m_programID != 0) {
         glDeleteProgram(m_programID);
     }
 }
 
-std::string Shader::readFile(const std::string& filepath) {
+std::string OpenGLShader::readFile(const std::string& filepath) {
     std::ifstream file(filepath);
     if (!file.is_open()) {
         std::cerr << "ERROR::SHADER: Failed to open file: " << filepath << std::endl;
@@ -29,7 +29,7 @@ std::string Shader::readFile(const std::string& filepath) {
     return buffer.str();
 }
 
-bool Shader::checkCompileErrors(unsigned int shader, const std::string& type) {
+bool OpenGLShader::checkCompileErrors(unsigned int shader, const std::string& type) {
     int success;
     char infoLog[1024];
     if (type != "PROGRAM") {
@@ -48,7 +48,7 @@ bool Shader::checkCompileErrors(unsigned int shader, const std::string& type) {
     return success == GL_TRUE;
 }
 
-bool Shader::load(const std::string& vertexPath, const std::string& fragmentPath) {
+bool OpenGLShader::load(const std::string& vertexPath, const std::string& fragmentPath) {
     std::string vertexCode = readFile(vertexPath);
     std::string fragmentCode = readFile(fragmentPath);
 
@@ -86,16 +86,16 @@ bool Shader::load(const std::string& vertexPath, const std::string& fragmentPath
     return true;
 }
 
-void Shader::use() const {
+void OpenGLShader::use() const {
     if (m_programID){
         glUseProgram(m_programID);
     }
 }
 
-void Shader::setMat4(const std::string& name, const glm::mat4& mat) const {
+void OpenGLShader::setMat4(const std::string& name, const glm::mat4& mat) const {
     glUniformMatrix4fv(glGetUniformLocation(m_programID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 }
 
-void Shader::setVec3(const std::string& name, const glm::vec3& vec) const {
+void OpenGLShader::setVec3(const std::string& name, const glm::vec3& vec) const {
     glUniform3fv(glGetUniformLocation(m_programID, name.c_str()), 1, &vec[0]);
 }

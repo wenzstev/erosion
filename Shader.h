@@ -5,22 +5,17 @@
 #pragma once
 
 #include <string>
-#include "glm/glm.hpp"
+#include "IShader.h"
 
-class Shader {
+class OpenGLShader : public IShader {
     public:
-    Shader();
-    ~Shader();
+    OpenGLShader();
+    ~OpenGLShader() override;
 
-    // loads a vertex and fragment shader from file, compiles, and links them
-    bool load(const std::string& vertexPath, const std::string& fragmentPath);
-
-    // use the shader
-    void use() const;
-
-    // utility functions for shader uniforms
-    void setMat4(const std::string& name, const glm::mat4& mat) const;
-    void setVec3(const std::string& name, const glm::vec3& vec) const;
+    bool load(const std::string& vertexPath, const std::string& fragmentPath) override;
+    void use() const override;
+    void setMat4(const std::string& name, const glm::mat4& mat) const override;
+    void setVec3(const std::string& name, const glm::vec3& vec) const override;
 
 private:
     unsigned int m_programID;
