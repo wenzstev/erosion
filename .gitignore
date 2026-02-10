@@ -1,0 +1,19 @@
+# Claude
+.claude/
+
+# Build directories
+cmake-build-*/
+build/
+
+# IDE
+.idea/
+*.swp
+*.swo
+
+# Compiled files
+*.o
+*.obj
+*.exe
+*.out
+*.a
+*.lib
