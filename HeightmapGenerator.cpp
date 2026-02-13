@@ -17,7 +17,7 @@ float HeightmapGenerator::getHeight(int x, int z, int width, int height, int cha
     return static_cast<float>(heightVal) / 255.0f;
 }
 
-Mesh HeightmapGenerator::generateFromImage(const std::string &filepath, float maxHeight, float scaleXZ) {
+Mesh HeightmapGenerator::generate(const std::string &filepath, float maxHeight, float scaleXZ) {
     Mesh mesh;
 
     int width, height, channels;
@@ -86,4 +86,3 @@ Mesh HeightmapGenerator::generateFromImage(const std::string &filepath, float ma
     std::cout << "Info [HeightmapGenerator]: Generation complete." << std::endl;
     return mesh;
 }
-

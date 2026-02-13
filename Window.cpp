@@ -7,12 +7,12 @@
 #include <algorithm>
 #include <iostream>
 
-Window::Window() : m_window(nullptr), m_width(0), m_height(0) {}
-Window::~Window() {
+GlfwWindow::GlfwWindow() : m_window(nullptr), m_width(0), m_height(0) {}
+GlfwWindow::~GlfwWindow() {
     shutdown();
 }
 
-bool Window::init(int width, int height, const std::string& title) {
+bool GlfwWindow::init(int width, int height, const std::string& title) {
     m_width = width;
     m_height = height;
 
@@ -55,7 +55,7 @@ bool Window::init(int width, int height, const std::string& title) {
     return true;
 }
 
-void Window::shutdown() {
+void GlfwWindow::shutdown() {
     if (m_window) {
         glfwDestroyWindow(m_window);
         m_window = nullptr;
@@ -63,15 +63,15 @@ void Window::shutdown() {
     glfwTerminate();
 }
 
-bool Window::isOpen() const {
+bool GlfwWindow::isOpen() const {
     return m_window && !glfwWindowShouldClose(m_window);
 }
 
-void Window::pollEvents() {
+void GlfwWindow::pollEvents() {
     glfwPollEvents();
 }
 
-void Window::swapBuffers() {
+void GlfwWindow::swapBuffers() {
     if (m_window) {
         glfwSwapBuffers(m_window);
     }

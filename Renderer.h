@@ -2,28 +2,20 @@
 // Created by wenze on 11/22/2025.
 //
 
-# pragma once
-#include "Mesh.h"
+#pragma once
 
-struct RenderableObject {
-    unsigned int vaoId;
-    unsigned int vboId;
-    unsigned int iboId;
-    unsigned int indexCount;
-};
+#include "IRenderer.h"
 
-class Renderer {
+class OpenGLRenderer : public IRenderer {
 public:
-    Renderer();
-    ~Renderer();
+    OpenGLRenderer();
+    ~OpenGLRenderer() override;
 
-    void init();
-    void beginFrame();
-    void endFrame();
-    void cleanup();
-    RenderableObject createRenderableMesh(const Mesh& mesh);
-    void destroyRenderableMesh(RenderableObject& object);
-    void draw(const RenderableObject& object);
+    void init() override;
+    void beginFrame() override;
+    void endFrame() override;
+    void cleanup() override;
+    RenderableObject createRenderableMesh(const Mesh& mesh) override;
+    void destroyRenderableMesh(RenderableObject& object) override;
+    void draw(const RenderableObject& object) override;
 };
-
-
