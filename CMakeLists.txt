@@ -79,6 +79,9 @@ target_link_libraries(terrain_lib
 
 add_executable(erosion
    main.cpp
+        Application.cpp
+        Application.h
+        AppConfig.h
 )
 
 target_link_libraries(erosion
