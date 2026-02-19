@@ -11,6 +11,7 @@ FetchContent_Declare(
         glm
         GIT_REPOSITORY https://github.com/g-truc/glm.git
         GIT_TAG 1.0.2
+        GIT_SHALLOW TRUE
 )
 FetchContent_MakeAvailable(glm)
 
@@ -26,6 +27,7 @@ FetchContent_Declare(
         glfw
         GIT_REPOSITORY https://github.com/glfw/glfw.git
         GIT_TAG 3.4
+        GIT_SHALLOW TRUE
 )
 FetchContent_MakeAvailable(glfw)
 
@@ -33,6 +35,7 @@ FetchContent_Declare(
         glad
         GIT_REPOSITORY https://github.com/libigl/libigl-glad
         GIT_TAG master
+        GIT_SHALLOW TRUE
 )
 FetchContent_MakeAvailable(glad)
 add_library(glad_loader
@@ -96,6 +99,7 @@ FetchContent_Declare(
         googletest
         GIT_REPOSITORY https://github.com/google/googletest.git
         GIT_TAG v1.17.0
+        GIT_SHALLOW TRUE
 )
 FetchContent_MakeAvailable(googletest)
 add_subdirectory(test)
