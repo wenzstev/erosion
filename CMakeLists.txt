@@ -6,44 +6,10 @@ set(CMAKE_CXX_STANDARD 20)
 
 set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++ -static")
 
-include(FetchContent)
-FetchContent_Declare(
-        glm
-        GIT_REPOSITORY https://github.com/g-truc/glm.git
-        GIT_TAG 1.0.2
-        GIT_SHALLOW TRUE
-)
-FetchContent_MakeAvailable(glm)
-
-FetchContent_Declare(
-        stb
-        GIT_REPOSITORY https://github.com/nothings/stb.git
-        GIT_TAG master
-        GIT_SHALLOW TRUE
-)
-FetchContent_MakeAvailable(stb)
-
-FetchContent_Declare(
-        glfw
-        GIT_REPOSITORY https://github.com/glfw/glfw.git
-        GIT_TAG 3.4
-        GIT_SHALLOW TRUE
-)
-FetchContent_MakeAvailable(glfw)
-
-FetchContent_Declare(
-        glad
-        GIT_REPOSITORY https://github.com/libigl/libigl-glad
-        GIT_TAG master
-        GIT_SHALLOW TRUE
-)
-FetchContent_MakeAvailable(glad)
-add_library(glad_loader
-    ${glad_SOURCE_DIR}/src/glad.c
-)
-target_include_directories(glad_loader
-    PUBLIC ${glad_SOURCE_DIR}/include
-)
+find_package(glm CONFIG REQUIRED)
+find_package(glfw3 CONFIG REQUIRED)
+find_package(glad CONFIG REQUIRED)
+find_package(Stb REQUIRED)
 
 add_library(stb_image INTERFACE)
 target_include_directories(
@@ -75,13 +41,13 @@ target_include_directories(terrain_lib
 target_link_libraries(terrain_lib
     PUBLIC
     glm::glm
-        glad
+        glad::glad
         glfw
         PRIVATE stb_image
 )
 
 add_executable(erosion
-   main.cpp
+        main.cpp
         Application.cpp
         Application.h
         AppConfig.h
