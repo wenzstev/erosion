@@ -4,6 +4,7 @@
 # Build directories
 cmake-build-*/
 build/
+vcpkg_installed/
 
 # IDE
 .idea/
