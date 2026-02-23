@@ -10,6 +10,9 @@
 #include <string>
 #include "IWindow.h"
 
+/**
+ * @brief GLFW-based implementation of IWindow.
+ */
 class GlfwWindow : public IWindow {
 public:
     GlfwWindow();
@@ -22,6 +25,10 @@ public:
     void pollEvents() override;
     void swapBuffers() override;
 
+    /**
+     * @brief Returns the underlying GLFWwindow pointer.
+     * Use when direct GLFW API access is needed (e.g. input callbacks).
+     */
     GLFWwindow* getNativeWindow() const {return m_window;}
     int getWidth() const override { return m_width;}
     int getHeight() const override {return m_height;}

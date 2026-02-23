@@ -7,6 +7,9 @@
 #include <string>
 #include "IShader.h"
 
+/**
+ * @brief OpenGL GLSL-based implementation of IShader.
+ */
 class OpenGLShader : public IShader {
     public:
     OpenGLShader();
@@ -20,6 +23,18 @@ class OpenGLShader : public IShader {
 private:
     unsigned int m_programID;
 
+    /**
+     * @brief Checks and logs compile or link errors for a shader object.
+     * @param shader The shader or program ID to check.
+     * @param type   "VERTEX", "FRAGMENT", or "PROGRAM".
+     * @return true if no errors were found, false otherwise.
+     */
     bool checkCompileErrors(unsigned int shader, const std::string& type);
+
+    /**
+     * @brief Reads the contents of a file into a string.
+     * @param filePath Path to the file to read.
+     * @return The file contents as a string.
+     */
     std::string readFile(const std::string& filePath);
 };

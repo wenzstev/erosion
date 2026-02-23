@@ -11,9 +11,15 @@
 #include <vector>
 #include "Vertex.h"
 
+/**
+ * @brief CPU-side mesh data ready for upload to the GPU.
+ */
 class Mesh {
     public:
+    /** @brief Vertex data for this mesh. */
     std::vector<Vertex> vertices;
+
+    /** @brief Index data defining the triangles of this mesh. */
     std::vector<unsigned int> indices;
 
     Mesh() = default;
