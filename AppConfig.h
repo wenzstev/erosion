@@ -9,14 +9,14 @@
 
 class AppConfig {
     public:
-    std::string heightmapPath;
-    int windowWidth;
-    int windowHeight;
-    std::string windowTitle;
-    float terrainMaxHeight;
-    float terrainScaleXZ;
-    std::string vertexShaderPath;
-    std::string fragmentShaderPath;
+    const std::string heightmapPath;
+    const int windowWidth;
+    const int windowHeight;
+    const std::string windowTitle;
+    const float terrainMaxHeight;
+    const float terrainScaleXZ;
+    const std::string vertexShaderPath;
+    const std::string fragmentShaderPath;
 };
 
 #endif //EROSION_APPCONFIG_H
