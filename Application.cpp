@@ -18,12 +18,6 @@ Application::Application(std::unique_ptr<AppConfig> config, std::unique_ptr<IWin
         meshGenerator(std::move(meshGenerator)){}
 
 
-Application::~Application() {
-    this->renderer->destroyRenderableMesh(*this->renderableObject);
-    this->window->shutdown();
-
-}
-
 bool Application::init() {
     this->terrainMesh = std::make_unique<Mesh>(this->meshGenerator->generate(this->config->heightmapPath, this->config->terrainMaxHeight, this->config->terrainScaleXZ));
     if (this->terrainMesh->vertices.empty()) {
