@@ -11,14 +11,14 @@
  */
 class OpenGLRenderer : public IRenderer {
 public:
-    OpenGLRenderer();
-    ~OpenGLRenderer() override;
+  OpenGLRenderer();
+  ~OpenGLRenderer() override;
 
-    void init() override;
-    void beginFrame() override;
-    void endFrame() override;
-    void cleanup() override;
-    RenderableObject createRenderableMesh(const Mesh& mesh) override;
-    void destroyRenderableMesh(RenderableObject& object) override;
-    void draw(const RenderableObject& object) override;
+  void init() override;
+  void beginFrame() override;
+  void endFrame() override;
+  void cleanup() override;
+  RenderableObject createRenderableMesh(const Mesh &mesh) override;
+  void destroyRenderableMesh(RenderableObject &object) override;
+  void draw(const RenderableObject &object) override;
 };

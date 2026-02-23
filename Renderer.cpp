@@ -4,81 +4,87 @@
 
 #include "Renderer.h"
 
+#include "glad/glad.h"
 #include <iostream>
 #include <ostream>
-#include "glad/glad.h"
 
-OpenGLRenderer::OpenGLRenderer(){}
-OpenGLRenderer::~OpenGLRenderer(){}
+OpenGLRenderer::OpenGLRenderer() {}
+OpenGLRenderer::~OpenGLRenderer() {}
 
 void OpenGLRenderer::init() {
-    glEnable(GL_DEPTH_TEST);
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+  glEnable(GL_DEPTH_TEST);
+  glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 }
 
 void OpenGLRenderer::beginFrame() {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void OpenGLRenderer::endFrame() {
+void OpenGLRenderer::endFrame() {}
 
-}
-
-void OpenGLRenderer::cleanup() {
-
-}
+void OpenGLRenderer::cleanup() {}
 
 RenderableObject OpenGLRenderer::createRenderableMesh(const Mesh &mesh) {
-    if (mesh.vertices.empty() || mesh.indices.empty()) {
-        std::cerr << "Error [Renderer]: Cannot create renderable from empty mesh." << std::endl;
-        return {0,0,0,0};
-    }
+  if (mesh.vertices.empty() || mesh.indices.empty()) {
+    std::cerr << "Error [Renderer]: Cannot create renderable from empty mesh."
+              << std::endl;
+    return {0, 0, 0, 0};
+  }
 
-    unsigned int vao, vbo, ibo;
+  unsigned int vao, vbo, ibo;
 
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
+  glGenVertexArrays(1, &vao);
+  glBindVertexArray(vao);
 
-    glGenBuffers(1, &vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+  glGenBuffers(1, &vbo);
+  glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
-    glBufferData(GL_ARRAY_BUFFER, mesh.vertices.size() * sizeof(Vertex), mesh.vertices.data(), GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, mesh.vertices.size() * sizeof(Vertex),
+               mesh.vertices.data(), GL_STATIC_DRAW);
 
-    glGenBuffers(1, &ibo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh.indices.size() * sizeof(unsigned int), mesh.indices.data(), GL_STATIC_DRAW);
+  glGenBuffers(1, &ibo);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+               mesh.indices.size() * sizeof(unsigned int), mesh.indices.data(),
+               GL_STATIC_DRAW);
 
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
+  glEnableVertexAttribArray(0);
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex),
+                        (void *)offsetof(Vertex, position));
 
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normal));
+  glEnableVertexAttribArray(1);
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex),
+                        (void *)offsetof(Vertex, normal));
 
-    glEnableVertexAttribArray(2);
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, texCoords));
+  glEnableVertexAttribArray(2);
+  glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex),
+                        (void *)offsetof(Vertex, texCoords));
 
-    glBindVertexArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+  glBindVertexArray(0);
+  glBindBuffer(GL_ARRAY_BUFFER, 0);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-    std::cout << "Info [Renderer]: Mesh uploaded to GPU." << std::endl;
-    std::cout << "  VAO ID: " << vao << ", VBO ID: " << vbo << ", IBO ID: " << ibo << std::endl;
-    std::cout << "  Vertices: " << mesh.vertices.size() << ", Indices: " << mesh.indices.size() << std::endl;
+  std::cout << "Info [Renderer]: Mesh uploaded to GPU." << std::endl;
+  std::cout << "  VAO ID: " << vao << ", VBO ID: " << vbo << ", IBO ID: " << ibo
+            << std::endl;
+  std::cout << "  Vertices: " << mesh.vertices.size()
+            << ", Indices: " << mesh.indices.size() << std::endl;
 
-    return {vao, vbo, ibo, (unsigned int)mesh.indices.size() };
+  return {vao, vbo, ibo, (unsigned int)mesh.indices.size()};
 }
 
-void OpenGLRenderer::destroyRenderableMesh(RenderableObject& object) {
-    glDeleteVertexArrays(1, &object.vaoId);
-    glDeleteBuffers(1, &object.vboId);
-    glDeleteBuffers(1, &object.iboId);
-    object= {0, 0, 0, 0 };
+void OpenGLRenderer::destroyRenderableMesh(RenderableObject &object) {
+  glDeleteVertexArrays(1, &object.vaoId);
+  glDeleteBuffers(1, &object.vboId);
+  glDeleteBuffers(1, &object.iboId);
+  object = {0, 0, 0, 0};
 }
 
-void OpenGLRenderer::draw(const RenderableObject& object) {
-    if (object.vaoId == 0) return;
+void OpenGLRenderer::draw(const RenderableObject &object) {
+  if (object.vaoId == 0)
+    return;
 
-    glBindVertexArray(object.vaoId);
-    glDrawElements(GL_TRIANGLES, object.indexCount, GL_UNSIGNED_INT, 0);
-    glBindVertexArray(0);
+  glBindVertexArray(object.vaoId);
+  glDrawElements(GL_TRIANGLES, object.indexCount, GL_UNSIGNED_INT, 0);
+  glBindVertexArray(0);
 }
