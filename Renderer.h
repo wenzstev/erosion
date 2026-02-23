@@ -6,6 +6,9 @@
 
 #include "IRenderer.h"
 
+/**
+ * @brief OpenGL-based implementation of IRenderer.
+ */
 class OpenGLRenderer : public IRenderer {
 public:
     OpenGLRenderer();
