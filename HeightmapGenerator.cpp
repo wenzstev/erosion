@@ -34,11 +34,11 @@ Mesh HeightmapGenerator::generate(const std::string &filepath, float maxHeight, 
         return mesh;
     }
 
-    std::cout << "Info [HeightmapGenerator]: Loaded " << width << "x" << height << "image." << std::endl;
+    std::cout << "Info [HeightmapGenerator]: Loaded " << width << " x " << height << " image." << std::endl;
 
     mesh.vertices.reserve(width * height);
 
-    // calculate the verticies
+    // calculate the vertices
     for (int z = 0; z < height; z++) {
         for (int x = 0; x < width; x++) {
             Vertex v;
