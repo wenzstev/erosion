@@ -22,7 +22,6 @@ public:
         std::unique_ptr<IShader> shader,
         std::unique_ptr<IMeshGenerator> meshGenerator);
 
-    ~Application();
 
     bool init();
     void run();
