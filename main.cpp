@@ -20,15 +20,16 @@ int main(int argc, char **argv) {
   std::unique_ptr<IRenderer> renderer = std::make_unique<OpenGLRenderer>();
   std::unique_ptr<IShader> shader = std::make_unique<OpenGLShader>();
 
-  auto appConfig = std::make_unique<AppConfig>();
-  appConfig->heightmapPath = argv[1];
-  appConfig->windowWidth = 1280;
-  appConfig->windowHeight = 720;
-  appConfig->terrainMaxHeight = 40.0f;
-  appConfig->terrainScaleXZ = 1.0f;
-  appConfig->windowTitle = "Erosion - Terrain Viewer";
-  appConfig->vertexShaderPath = "terrain.vert";
-  appConfig->fragmentShaderPath = "terrain.frag";
+  auto appConfig = std::make_unique<AppConfig>(AppConfig{
+    .heightmapPath = argv[1],
+    .windowWidth = 1280,
+    .windowHeight = 720,
+    .windowTitle = "Erosion - Terrain Viewer",
+    .terrainMaxHeight = 40.0f,
+    .terrainScaleXZ = 1.0f,
+    .vertexShaderPath = "terrain.vert",
+    .fragmentShaderPath = "terrain.frag",
+  });
 
   std::unique_ptr<Application> app = std::make_unique<Application>(
       std::move(appConfig), std::move(window), std::move(renderer),
