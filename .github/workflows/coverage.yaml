@@ -1,0 +1,44 @@
+name: code coverage
+on:
+  push:
+    branches: [sw/codecov]
+  pull_request:
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: install lcov
+        run: sudo apt-get install -y lcov
+
+      - name: configure
+        run: cmake --preset coverage
+
+      - name: build
+        run: cmake --build --preset coverage
+
+      - name: test
+        run: ctest --test-dir cmake-build-coverage --output-on-failure
+
+      - name: capture coverage
+        run: | 
+          lcov --capture \ 
+               --directory cmake-build-coverage \
+               --output-file lcov.info
+
+      - name: filter coverage
+        run: |
+          lcov --remove lcov.info \ 
+          '/usr/*' \
+          '*/cmake-build-coverage/_deps/*' \
+          --output-file lcov.info
+
+      - name: uploade to CodeCov
+        uses: codecov/codecov-action@v4
+        with:
+          files: lcov.info
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
