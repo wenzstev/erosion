@@ -9,7 +9,9 @@
       "cacheVariables": {
         "CMAKE_CXX_FLAGS": "--coverage",
         "CMAKE_EXE_LINKER_FLAGS": "--coverage",
-        "CMAKE_BUILD_TYPE": "Debug"
+        "CMAKE_BUILD_TYPE": "Debug",
+        "GLFW_BUILD_WAYLAND": "OFF",
+        "GLFW_BUILD_X11": "OFF"
       }
     }
   ],
