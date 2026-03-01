@@ -25,7 +25,7 @@ jobs:
 
       - name: capture coverage
         run: | 
-          lcov --capture \ 
+          lcov --capture \
                --directory cmake-build-coverage \
                --output-file lcov.info
 
