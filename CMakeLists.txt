@@ -51,6 +51,7 @@ target_include_directories(glad_loader
     PUBLIC ${glad_SOURCE_DIR}/include
 )
 
+
 add_library(stb_image INTERFACE)
 target_include_directories(
         stb_image
