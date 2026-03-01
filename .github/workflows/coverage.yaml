@@ -32,10 +32,11 @@ jobs:
 
       - name: filter coverage
         run: |
-          lcov --remove lcov.info \ 
+          lcov --remove lcov.info \
           '/usr/*' \
           '*/cmake-build-coverage/_deps/*' \
-          --output-file lcov.info
+          --output-file lcov.info \
+          --ignore-errors mismatch
 
       - name: upload to CodeCov
         uses: codecov/codecov-action@v4
