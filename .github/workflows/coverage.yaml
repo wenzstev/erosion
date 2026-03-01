@@ -1,7 +1,7 @@
 name: code coverage
 on:
   push:
-    branches: [sw/codecov]
+    branches: [main]
   pull_request:
 
 jobs:
