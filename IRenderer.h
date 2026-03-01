@@ -5,15 +5,19 @@
 #pragma once
 
 #include "Mesh.h"
+#include "GLHandles.h"
+
 
 /**
- * @brief Holds GPU buffer handles for a mesh uploaded to the renderer.
+ * @brief Holds RAII-managed GPU buffer handles for a mesh uploaded to the renderer.
+ *
+ * Move-only. GPU resources are automatically released when this object is destroyed.
  */
 struct RenderableObject {
-  unsigned int vaoId;
-  unsigned int vboId;
-  unsigned int iboId;
-  unsigned int indexCount;
+  GLVertexArray vao;
+  GLBuffer vbo;
+  GLBuffer ibo;
+  unsigned int indexCount = 0;
 };
 
 /**
