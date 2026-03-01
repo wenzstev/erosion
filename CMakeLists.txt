@@ -13,50 +13,43 @@ if(ENABLE_CLANG_TIDY)
 endif()
 
 include(FetchContent)
+FetchContent_Declare(
+        glm
+        GIT_REPOSITORY https://github.com/g-truc/glm.git
+        GIT_TAG 1.0.2
+        GIT_SHALLOW TRUE
+)
+FetchContent_MakeAvailable(glm)
 
-find_package(glm CONFIG QUIET)
-if(NOT glm_FOUND)
-    FetchContent_Declare(
-            glm
-            GIT_REPOSITORY https://github.com/g-truc/glm.git
-            GIT_TAG 1.0.1
-            GIT_SHALLOW TRUE
-    )
-    FetchContent_MakeAvailable(glm)
-endif()
+FetchContent_Declare(
+        stb
+        GIT_REPOSITORY https://github.com/nothings/stb.git
+        GIT_TAG master
+        GIT_SHALLOW TRUE
+)
+FetchContent_MakeAvailable(stb)
 
-find_package(glfw3 CONFIG QUIET)
-if (NOT glfw3_FOUND)
-    FetchContent_Declare(
-            glfw3
-            GIT_REPOSITORY https://github.com/glfw/glfw.git
-            GIT_TAG 3.4
-            GIT_SHALLOW TRUE
-    )
-    FetchContent_MakeAvailable(glfw3)
-endif ()
+FetchContent_Declare(
+        glfw
+        GIT_REPOSITORY https://github.com/glfw/glfw.git
+        GIT_TAG 3.4
+        GIT_SHALLOW TRUE
+)
+FetchContent_MakeAvailable(glfw)
 
-find_package(glad CONFIG QUIET)
-if (NOT glad_FOUND)
-    FetchContent_Declare(
-            glad
-            GIT_REPOSITORY https://github.com/libigl/libigl-glad
-            GIT_TAG master
-            GIT_SHALLOW TRUE
-    )
-    FetchContent_MakeAvailable(glad)
-endif ()
-
-find_package(Stb QUIET)
-if (NOT Stb_FOUND)
-    FetchContent_Declare(
-            Stb
-            GIT_REPOSITORY https://github.com/nothings/stb.git
-            GIT_TAG master
-            GIT_SHALLOW true
-    )
-    FetchContent_MakeAvailable(Stb)
-endif()
+FetchContent_Declare(
+        glad
+        GIT_REPOSITORY https://github.com/libigl/libigl-glad
+        GIT_TAG master
+        GIT_SHALLOW TRUE
+)
+FetchContent_MakeAvailable(glad)
+add_library(glad_loader
+    ${glad_SOURCE_DIR}/src/glad.c
+)
+target_include_directories(glad_loader
+    PUBLIC ${glad_SOURCE_DIR}/include
+)
 
 add_library(stb_image INTERFACE)
 target_include_directories(
@@ -88,13 +81,13 @@ target_include_directories(terrain_lib
 target_link_libraries(terrain_lib
     PUBLIC
     glm::glm
-        glad::glad
+        glad
         glfw
         PRIVATE stb_image
 )
 
 add_executable(erosion
-        main.cpp
+   main.cpp
         Application.cpp
         Application.h
         AppConfig.h
@@ -106,6 +99,7 @@ target_link_libraries(erosion
 )
 
 enable_testing()
+include(FetchContent)
 
 FetchContent_Declare(
         googletest
