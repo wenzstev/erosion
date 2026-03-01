@@ -15,7 +15,8 @@
 // Test that the generator handles a non-existent file gracefully.
 TEST(HeightmapGeneratorTest, HandlesFileNotFound) {
   // Act: Try to load a file that doesn't exist.
-  Mesh mesh = HeightmapGenerator::generateFromImage("non_existent_file.png",
+  HeightmapGenerator generator;
+  Mesh mesh = generator.generate("non_existent_file.png",
                                                     10.0f, 1.0f);
 
   // Assert: The resulting mesh should be empty.
@@ -38,8 +39,8 @@ TEST(HeightmapGeneratorTest, GeneratesCorrectlyFrom3x3) {
   std::string test_image_path = "../../test_3x3.png";
 
   // Act: Generate a mesh with specific, simple parameters.
-  Mesh mesh =
-      HeightmapGenerator::generateFromImage(test_image_path, 10.0f, 1.0f);
+  HeightmapGenerator generator;
+  Mesh mesh = generator.generate(test_image_path, 10.0f, 1.0f);
 
   // Assert (General): Check that the file was loaded and mesh generated
   ASSERT_FALSE(mesh.vertices.empty())

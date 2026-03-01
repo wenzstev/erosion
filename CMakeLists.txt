@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 4.0)
+cmake_minimum_required(VERSION 3.20)
 
 project(erosion)
 
@@ -50,6 +50,7 @@ add_library(glad_loader
 target_include_directories(glad_loader
     PUBLIC ${glad_SOURCE_DIR}/include
 )
+
 
 add_library(stb_image INTERFACE)
 target_include_directories(
