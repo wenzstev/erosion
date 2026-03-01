@@ -27,7 +27,8 @@ jobs:
         run: | 
           lcov --capture \
                --directory cmake-build-coverage \
-               --output-file lcov.info
+               --output-file lcov.info \
+               --ignore-errors mismatch
 
       - name: filter coverage
         run: |
