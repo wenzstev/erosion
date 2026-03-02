@@ -28,7 +28,6 @@ Mesh HeightmapGenerator::generate(const std::string &filepath, float maxHeight,
   if (data == nullptr) {
     std::cerr << "Error [HeightmapGenerator]: Failed to load image '"
               << filepath << "'" << std::endl;
-    stbi_image_free(data);
     return mesh;
   }
 
