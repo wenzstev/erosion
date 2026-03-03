@@ -7,8 +7,24 @@ build/
 
 # IDE
 .idea/
+.vscode/
 *.swp
 *.swo
+
+# macOS
+.DS_Store
+
+# Coverage
+*.gcov
+*.lcov
+coverage/
+
+# Environment
+*.env
+
+# Build artifacts
+compile_commands.json
+
 
 # Compiled files
 *.o
