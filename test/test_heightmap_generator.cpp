@@ -10,6 +10,7 @@
 #include "Mesh.h"
 #include "glm/glm.hpp"
 #include "gtest/gtest.h"
+#include <filesystem>
 
 // --- Test Case 1: File Not Found ---
 // Test that the generator handles a non-existent file gracefully.
@@ -33,14 +34,12 @@ TEST(HeightmapGeneratorTest, HandlesFileNotFound) {
 // See test/README_TESTING.md for instructions on how to create it.
 //
 TEST(HeightmapGeneratorTest, GeneratesCorrectlyFrom3x3) {
-  // Arrange: Path to the test image
-  // We assume the test is run from the 'cmake-build-debug' folder,
-  // so we go up one level to find the project root.
-  std::string test_image_path = "../../test_3x3.png";
+  std::filesystem::path assets_dir = TEST_ASSETS_DIR;
+  std::filesystem::path test_image_path = assets_dir / "test_3x3.png";
 
-  // Act: Generate a mesh with specific, simple parameters.
+  //  Generate a mesh with specific, simple parameters.
   HeightmapGenerator generator;
-  Mesh mesh = generator.generate(test_image_path, 10.0f, 1.0f);
+  Mesh mesh = generator.generate(test_image_path.string(), 10.0f, 1.0f);
 
   // Assert (General): Check that the file was loaded and mesh generated
   ASSERT_FALSE(mesh.vertices.empty())
