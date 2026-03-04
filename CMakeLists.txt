@@ -92,6 +92,8 @@ add_executable(erosion
         Application.cpp
         Application.h
         AppConfig.h
+        GLHandles.h
+        OpenGLRenderer.h
 )
 
 target_link_libraries(erosion

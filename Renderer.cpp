@@ -4,6 +4,7 @@
 
 #include "Renderer.h"
 
+#include "OpenGLRenderer.h"
 #include "glad/glad.h"
 #include <iostream>
 #include <ostream>
@@ -24,11 +25,11 @@ void OpenGLRenderer::endFrame() {}
 
 void OpenGLRenderer::cleanup() {}
 
-RenderableObject OpenGLRenderer::createRenderableMesh(const Mesh &mesh) {
+std::unique_ptr<RenderableObject> OpenGLRenderer::createRenderableMesh(const Mesh &mesh) {
   if (mesh.vertices.empty() || mesh.indices.empty()) {
     std::cerr << "Error [Renderer]: Cannot create renderable from empty mesh."
               << std::endl;
-    return {0, 0, 0, 0};
+    return {};
   }
 
   unsigned int vao, vbo, ibo;
@@ -64,27 +65,28 @@ RenderableObject OpenGLRenderer::createRenderableMesh(const Mesh &mesh) {
   glBindBuffer(GL_ARRAY_BUFFER, 0);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
+  auto result = std::make_unique<OpenGLRendererObject>();
+  result->vao = GLVertexArray(vao);
+  result->vbo = GLBuffer(vbo);
+  result->ibo = GLBuffer(ibo);
+  result->count = static_cast<unsigned int>(mesh.indices.size());
+
   std::cout << "Info [Renderer]: Mesh uploaded to GPU." << std::endl;
-  std::cout << "  VAO ID: " << vao << ", VBO ID: " << vbo << ", IBO ID: " << ibo
-            << std::endl;
+    std::cout << "  VAO ID: " << result->vao.id << ", VBO ID: " << result->vbo.id
+            << ", IBO ID: " << result->ibo.id << std::endl;
   std::cout << "  Vertices: " << mesh.vertices.size()
             << ", Indices: " << mesh.indices.size() << std::endl;
 
-  return {vao, vbo, ibo, (unsigned int)mesh.indices.size()};
-}
-
-void OpenGLRenderer::destroyRenderableMesh(RenderableObject &object) {
-  glDeleteVertexArrays(1, &object.vaoId);
-  glDeleteBuffers(1, &object.vboId);
-  glDeleteBuffers(1, &object.iboId);
-  object = {0, 0, 0, 0};
+  return result;
 }
 
 void OpenGLRenderer::draw(const RenderableObject &object) {
-  if (object.vaoId == 0)
+  const auto& glObj = static_cast<const OpenGLRendererObject&>(object);
+
+  if (glObj.vao.id == 0)
     return;
 
-  glBindVertexArray(object.vaoId);
-  glDrawElements(GL_TRIANGLES, object.indexCount, GL_UNSIGNED_INT, 0);
+  glBindVertexArray(glObj.vao.id);
+  glDrawElements(GL_TRIANGLES, glObj.indexCount(), GL_UNSIGNED_INT, 0);
   glBindVertexArray(0);
 }

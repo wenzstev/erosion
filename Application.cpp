@@ -4,6 +4,8 @@
 
 #include "Application.h"
 
+#include "OpenGLRenderer.h"
+
 #include <iostream>
 
 #include "glm/ext/matrix_clip_space.hpp"
@@ -36,8 +38,7 @@ bool Application::init() {
 
   this->renderer->init();
 
-  this->renderableObject = std::make_unique<RenderableObject>(
-      renderer->createRenderableMesh(*terrainMesh));
+  this->renderableObject = renderer->createRenderableMesh(*terrainMesh);
 
   if (!this->shader->load(this->config->vertexShaderPath,
                           this->config->fragmentShaderPath)) {

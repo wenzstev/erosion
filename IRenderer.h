@@ -5,15 +5,20 @@
 #pragma once
 
 #include "Mesh.h"
+#include "GLHandles.h"
+
+#include <memory>
 
 /**
- * @brief Holds GPU buffer handles for a mesh uploaded to the renderer.
+ * @brief Holds RAII-managed GPU buffer handles for a mesh uploaded to the
+ * renderer.
+ *
+ * Move-only. GPU resources are automatically released when this object is
+ * destroyed.
  */
 struct RenderableObject {
-  unsigned int vaoId;
-  unsigned int vboId;
-  unsigned int iboId;
-  unsigned int indexCount;
+  virtual ~RenderableObject() = default;
+  virtual unsigned int indexCount() const = 0;
 };
 
 /**
@@ -51,13 +56,7 @@ public:
    * @param mesh The mesh data to upload.
    * @return A RenderableObject containing the GPU buffer handles.
    */
-  virtual RenderableObject createRenderableMesh(const Mesh &mesh) = 0;
-
-  /**
-   * @brief Releases the GPU buffers associated with a renderable object.
-   * @param object The object whose GPU resources should be freed.
-   */
-  virtual void destroyRenderableMesh(RenderableObject &object) = 0;
+  virtual std::unique_ptr<RenderableObject> createRenderableMesh(const Mesh &mesh) = 0;
 
   /**
    * @brief Issues a draw call for the given renderable object.
