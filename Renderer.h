@@ -18,7 +18,6 @@ public:
   void beginFrame() override;
   void endFrame() override;
   void cleanup() override;
-  RenderableObject createRenderableMesh(const Mesh &mesh) override;
-  void destroyRenderableMesh(RenderableObject &object) override;
+  std::unique_ptr<RenderableObject> createRenderableMesh(const Mesh &mesh) override;
   void draw(const RenderableObject &object) override;
 };
